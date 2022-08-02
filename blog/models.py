@@ -1,6 +1,7 @@
 from django.db import models
 from user.models import Author
 from django.urls import reverse
+from taggit.managers import TaggableManager
 # Create your models here.
 
 class Post(models.Model):
@@ -11,22 +12,22 @@ class Post(models.Model):
   
   title=models.CharField(max_length=200)
   body=models.TextField()
-  created_at=models.DateTimeField(auto_now_add=True)
-  updated_at=models.DateTimeField(auto_now=True)
+  created_at=models.DateTimeField(auto_now_add=True,verbose_name='time created')
+  updated_at=models.DateTimeField(auto_now=True,verbose_name='last updated')
   author=models.ForeignKey(Author,on_delete=models.CASCADE)
-  hits=models.IntegerField(default=0,editable=False)
+  hits=models.IntegerField(default=0,editable=False,verbose_name='view count')
   privacy=models.IntegerField(choices=PRIVACY,default=0)
-  tags=models.ManyToManyField('Tag',blank=True)
-  catagory=models.ForeignKey('Catagory',on_delete=models.CASCADE)
+  tags=TaggableManager(blank=True)
+  catagory=models.ForeignKey('Catagory',on_delete=models.CASCADE,related_name='posts')
   def __str__(self):
       return self.title
 
   def get_absolute_url(self):
-      return reverse("post_detail", kwargs={"pk": self.pk})
+      return reverse("post_detail", kwargs={"pk": self.pk}) or  ''
 
 
 
-class Tag(models.Model):
+'''class Tag(models.Model):
 
     name=models.CharField(max_length=100)
 
@@ -36,14 +37,19 @@ class Tag(models.Model):
 
     def get_absolute_url(self):
         return reverse("Tag_detail", kwargs={"pk": self.pk})
-
+'''
 class Catagory(models.Model):
     parent=models.ForeignKey('self',null=True,blank=True,default=None,on_delete=models.CASCADE)
     name=models.CharField(max_length=100)
 
     
+    class Meta:
+        verbose_name = "Catagory"
+        verbose_name_plural = "Catagories"
+
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse("Catagory_detail", kwargs={"pk": self.pk})
+
