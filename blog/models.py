@@ -1,6 +1,7 @@
 from django.db import models
 from user.models import Author
 from django.urls import reverse
+from django.contrib.auth import get_user_model
 from taggit.managers import TaggableManager
 # Create your models here.
 
@@ -53,3 +54,22 @@ class Catagory(models.Model):
     def get_absolute_url(self):
         return reverse("Catagory_detail", kwargs={"pk": self.pk})
 
+
+class Comment(models.Model):
+    owner=models.ForeignKey(get_user_model(),blank=True,on_delete=models.CASCADE,verbose_name='Commented by')
+    post=models.ForeignKey(Post,on_delete=models.CASCADE)
+    parent=models.ForeignKey('self',default=None,null=True,blank=True,on_delete=models.CASCADE,verbose_name='Reply to')
+    body=models.TextField()
+    created_at=models.DateTimeField(auto_now_add=True,verbose_name='time created')
+    updated_at=models.DateTimeField(auto_now=True,verbose_name='last updated')
+  
+
+    class Meta:
+        verbose_name = "Comment"
+        verbose_name_plural = "Comments"
+
+    def __str__(self):
+        return self.body[:10]+'...'
+
+    def get_absolute_url(self):
+        return reverse("comment_detail", kwargs={"pk": self.pk})
