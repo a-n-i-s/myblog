@@ -1,0 +1,40 @@
+{% load humanize %}
+
+{% for comment in comments  %}
+<div style="margin:0px 5%; position:relative;">
+
+
+<article style="margin:10px; position:relative;">
+  <strong>{{comment.owner}}</strong> says <small>({{comment.updated_at|naturaltime}})</small>: 
+  <p>
+    {{comment.body}}
+  </p>
+
+  <div style="display:flex;flex-direction:row;align-items:center">
+    
+       
+  
+ 
+
+    {% if user.id is comment.owner.id %}
+  <a href= {% url 'comment_update' comment.id %} role='button'>edit</a>
+  
+  {% include 'comment/comment_delete.html' with comment=comment %}
+
+  {% endif %}
+</div>
+
+<details>
+  <summary>reply</summary>
+  {% include 'post/makecomment.html' with parent=comment %}
+  
+</details>
+</article>
+ 
+{% if comment.children.all%}
+{% include 'comment/comments.html' with comments=comment.children.all %}
+{% endif %}
+
+</div>
+{% endfor %}
+

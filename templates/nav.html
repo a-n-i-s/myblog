@@ -1,0 +1,14 @@
+
+<a href={% url 'post_list' %}>Home</a>
+{% if user.is_authorized %}
+<a href="/admin/logout">Logout</a>
+{% else %}
+<a href="/admin/login/?next=/posts/">Login</a>
+{% endif %}
+{% if user.is_author %}
+
+<a href={% url 'post_create' %}>Create New Post</a>
+{% else %}
+<a href={% url 'author_create'  %}>Write your own post</a>
+
+{% endif %}

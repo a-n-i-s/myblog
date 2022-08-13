@@ -1,0 +1,41 @@
+{% load humanize %}
+<article>
+  {% if listview %}
+  <a href={% url 'post_detail' post.id %}>
+    <h4>{{post.title}}</h4>
+  </a>
+  
+  {% else %}
+  <h2>{{post.title}}
+  
+  {% if user.id is post.author.user.id %}
+  <small><a href={% url 'post_update' post.id %}>Edit</a></small>
+  {% endif %}
+  </h2>
+  {% endif %}
+
+  
+    <span>by <a href={% url 'author_detail' post.author.id %}>{{post.author}}</a> |
+     created: {{ post.created_at|naturaltime }} 
+     | 
+     
+     last updated: {{ post.updated_at|naturaltime }}
+     
+  </span>
+  <p>
+  <span>
+
+  {% include 'post/tags.html' with tags=post.get_tags.all %}
+  </span>
+</p>
+{% if listview %}
+<p>{{post.get_short_description}}</p>
+
+{% else %}
+
+<p>{{post.body}}</p>
+{% include 'comment/comments.html' with comments=post.get_comments%}
+{% include 'post/makecomment.html' %}
+{% endif %}
+
+</article>

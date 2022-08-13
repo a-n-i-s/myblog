@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>{{author.name}}</h1>
+<p>{{author.about}}</p>
+{% if user.id is author.user.id %}
+<a href={% url 'author_update' author.id %}>edit</a>
+{% endif %}
+<details>
+<summary>all posts by <strong>{{author.name}}</strong> </summary> 
+<div>
+{% for post in author.posts.all %}
+{% include 'post/post.html' with listview=True%}
+{% endfor %}
+</div>
+</details>
+{% endblock content %}

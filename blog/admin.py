@@ -7,7 +7,7 @@ from django.utils.html import format_html
 class CommentInline(admin.StackedInline):
     model=Comment
     fields=['owner','created_at','parent','body']
-    readonly_fields=['owner','created_at','parent']
+    readonly_fields=['owner','created_at']
     extra=1
     
 

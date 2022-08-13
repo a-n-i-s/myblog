@@ -1,0 +1,7 @@
+<form action={% url 'comment_create' post.id%} method="post">
+{% csrf_token %}
+
+<input type="hidden" name="parent" value={{parent.id}}>
+  <input type="text" name="body" placeholder={% if parent %}"Write a reply" {% else %}"Write a comment" {% endif %}>
+  <input type="submit" value={% if parent %}"reply" {% else %}"comment" {% endif %}>
+</form>

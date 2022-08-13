@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for p in object_list %}
+{% include 'post/post.html'  with post=p listview=True %}
+{% endfor %}
+{% endblock content %}
+

@@ -1,3 +1,4 @@
+from os import O_WRONLY
 from django.db import models
 from user.models import Author
 from django.urls import reverse
@@ -15,7 +16,7 @@ class Post(models.Model):
   body=models.TextField()
   created_at=models.DateTimeField(auto_now_add=True,verbose_name='time created')
   updated_at=models.DateTimeField(auto_now=True,verbose_name='last updated')
-  author=models.ForeignKey(Author,on_delete=models.CASCADE)
+  author=models.ForeignKey(Author,on_delete=models.CASCADE,related_name='posts')
   hits=models.IntegerField(default=0,editable=False,verbose_name='view count')
   privacy=models.IntegerField(choices=PRIVACY,default=0)
   tags=TaggableManager(blank=True)
@@ -23,9 +24,16 @@ class Post(models.Model):
   def __str__(self):
       return self.title
 
+  
+  def get_short_description(self):
+    return self.body[:20]+("..." if len(self.body)>20 else "")
+
+  def get_tags(self):
+    return self.tags.all()
+  def get_comments(self):
+    return self.comments.filter(parent=None)
   def get_absolute_url(self):
       return reverse("post_detail", kwargs={"pk": self.pk}) or  ''
-
 
 
 '''class Tag(models.Model):
@@ -57,9 +65,9 @@ class Catagory(models.Model):
 
 class Comment(models.Model):
     owner=models.ForeignKey(get_user_model(),blank=True,on_delete=models.CASCADE,verbose_name='Commented by')
-    post=models.ForeignKey(Post,on_delete=models.CASCADE)
-    parent=models.ForeignKey('self',default=None,null=True,blank=True,on_delete=models.CASCADE,verbose_name='Reply to')
-    body=models.TextField()
+    post=models.ForeignKey(Post,on_delete=models.CASCADE,related_name='comments')
+    parent=models.ForeignKey('self',default=None,null=True,blank=True,on_delete=models.CASCADE,verbose_name='Reply to',related_name='children')
+    body=models.TextField(verbose_name='')
     created_at=models.DateTimeField(auto_now_add=True,verbose_name='time created')
     updated_at=models.DateTimeField(auto_now=True,verbose_name='last updated')
   
@@ -73,3 +81,4 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return reverse("comment_detail", kwargs={"pk": self.pk})
+

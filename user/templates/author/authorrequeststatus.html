@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if request.status is 1 %}
+You are blocked by admin.
+{% else %}
+Your request has been submitted.Please wait while admin aproves your request.
+{% endif %}
+{% endblock content %}
