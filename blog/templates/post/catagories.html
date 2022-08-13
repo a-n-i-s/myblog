@@ -1,0 +1,14 @@
+
+<ul>
+  {% for c in catagories %}
+  <li>
+    <a href={% url 'catagory_detail' c.id %} >
+      📁{{c.name}} ({{c.itemcount}})
+    </a>
+  </li>
+  {% if c.children %}
+  {% include 'post/catagories.html' with catagories=c.children.all %}
+  {% endif %}
+  
+  {% endfor %}
+</ul>

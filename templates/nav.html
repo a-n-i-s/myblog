@@ -1,6 +1,6 @@
 
 <a href={% url 'post_list' %}>Home</a>
-{% if user.is_authorized %}
+{% if user.is_authenticated %}
 <a href="/admin/logout">Logout</a>
 {% else %}
 <a href="/admin/login/?next=/posts/">Login</a>

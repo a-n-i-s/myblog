@@ -86,7 +86,7 @@ class PostInline(admin.StackedInline):
 
 @admin.register(Catagory)
 class CatagoryAdmin(admin.ModelAdmin):
-    fields=['name']
+    fields=['name','parent']
     inlines=[PostInline]
 
 '''@admin.register(Tag)

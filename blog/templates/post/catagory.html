@@ -1,0 +1,15 @@
+
+{% if catagory.posts %}
+{% for p in  catagory.posts.all %}
+{% include 'post/post.html'  with post=p listview=True %}
+{% endfor %}
+
+{% endif %}
+
+{% if catagory.children %}
+{% for c in catagory.children.all %}
+
+{% include 'post/catagory.html'  with catagory=c %}
+
+{% endfor %}
+{% endif %}

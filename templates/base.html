@@ -15,6 +15,12 @@
   </navbar>
   <main>
   {% block content %}{% endblock content %}
+  
+  <h4>Catagories:</h4>
+  {% block catagories %}
+  
+    {% include 'post/catagories.html' %}
+  {% endblock catagories %}
 </main>
 </body>
 </html>

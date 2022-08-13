@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView,CreateView,UpdateView,DeleteView,DetailView
-from .models import Post,Author,Comment
+from .models import Catagory, Post,Author,Comment
 from django.contrib.auth.mixins import UserPassesTestMixin,LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
@@ -105,7 +105,9 @@ class CommentDeleteView(DeleteView):
         return reverse_lazy('post_detail',args={self.object.post.id})
    
 
-
+class CatagoryDetailView(DetailView):
+    model=Catagory
+    template_name='post/catagory_detail.html'
        
 
 

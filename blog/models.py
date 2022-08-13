@@ -48,9 +48,10 @@ class Post(models.Model):
         return reverse("Tag_detail", kwargs={"pk": self.pk})
 '''
 class Catagory(models.Model):
-    parent=models.ForeignKey('self',null=True,blank=True,default=None,on_delete=models.CASCADE)
+    parent=models.ForeignKey('self',null=True,blank=True,default=None,on_delete=models.CASCADE,related_name='children')
     name=models.CharField(max_length=100)
 
+    
     
     class Meta:
         verbose_name = "Catagory"
@@ -61,6 +62,13 @@ class Catagory(models.Model):
 
     def get_absolute_url(self):
         return reverse("Catagory_detail", kwargs={"pk": self.pk})
+    @property
+    def itemcount(self):
+        c=self.posts.count()
+        for i in self.children.all():
+            c+=i.itemcount
+
+        return c
 
 
 class Comment(models.Model):
