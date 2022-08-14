@@ -1,0 +1,9 @@
+.ads {
+  border: 1px solid whitesmoke;
+  width: fit-content;
+}
+
+.ads a {
+  text-decoration: none;
+  color: inherit;
+}

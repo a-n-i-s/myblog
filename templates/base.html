@@ -7,6 +7,8 @@
   
   <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
   {% load static %}
+  <link rel="stylesheet" href={% static 'css/main.css' %}>
+ 
   <title>Myblog</title>
 </head>
 <body>
@@ -20,7 +22,14 @@
   {% block catagories %}
   
     {% include 'post/catagories.html' %}
+
   {% endblock catagories %}
+
+  {% block ads %}
+  {% include 'ads/ads.html' %}
+  {% endblock ads %}
+
+
 </main>
 </body>
 </html>

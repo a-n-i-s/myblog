@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'taggit',
     'user',
     'blog',
+    'ads',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 'blog.context_processors.catagories',
+                'ads.context_processors.ads',
             ],
         },
     },
