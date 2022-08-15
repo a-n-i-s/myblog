@@ -34,8 +34,9 @@
 {% else %}
 
 <p>{{post.body}}</p>
+{% if settings.showcomments %}
 {% include 'comment/comments.html' with comments=post.get_comments%}
 {% include 'post/makecomment.html' %}
 {% endif %}
-
+{% endif %}
 </article>

@@ -39,10 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'ckeditor',
     'taggit',
     'user',
     'blog',
     'ads',
+    'settings',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +72,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 'blog.context_processors.catagories',
+                'settings.context_processors.usersettings',
                 'ads.context_processors.ads',
             ],
         },

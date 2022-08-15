@@ -20,6 +20,7 @@ def aprove(ModelAdmin,request,queryset):
             about=d.about,
             status=d.status
         )
+        
         d.delete()
 
 @admin.action()

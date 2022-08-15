@@ -1,10 +1,11 @@
 from django.db import models
 from django.urls import reverse
+from ckeditor.fields import RichTextField
 # Create your models here.
 class Ad(models.Model):
 
     link=models.URLField()
-    body=models.TextField()
+    body=RichTextField()
 
     class Meta:
         verbose_name = "Ad"

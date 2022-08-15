@@ -3,13 +3,14 @@
 
   {% for ad in ads %}
   {% load static %}
+
 <div class='ads'>
   <a href={{ad.link}} target='_blank' >
     
     <table>
       <tr>
         <td>
-          {{ad.body}}
+          {{ad.body|safe}}
         </td>
       </tr>
     </table>

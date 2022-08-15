@@ -1,3 +1,11 @@
+.dark {
+  background: rgba(15, 14, 14, 0.853);
+  color: aliceblue;
+}
+
+.dark a {
+  color: orange;
+}
 .ads {
   border: 1px solid whitesmoke;
   width: fit-content;
