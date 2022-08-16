@@ -22,6 +22,7 @@ class PostCreateView(CreateView):
     model = Post
     fields=['title','body','catagory','tags']
     template_name = "post/postcreate.html"
+    success_url=reverse_lazy('post_list')
 
     def form_valid(self,form):
         form.instance.author=self.request.user.author

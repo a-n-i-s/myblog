@@ -32,8 +32,9 @@ class Post(models.Model):
     return self.tags.all()
   def get_comments(self):
     return self.comments.filter(parent=None)
-    def get_absolute_url(self):
-      return reverse("post_detail", kwargs={"pk": self.pk}) or  ''
+
+  def get_absolute_url(self):
+    return reverse("post_detail", kwargs={"pk": self.pk}) or  ''
 
 
 
