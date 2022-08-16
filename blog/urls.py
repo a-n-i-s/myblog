@@ -11,6 +11,9 @@ from .views import (
                     CommentUpdateView,
                     CommentDeleteView,
                     CatagoryDetailView,
+                    FavouriteListView,
+                    
+                    togglebookmark,
                     )
 urlpatterns = [
     path('',PostListView.as_view(),name='homepage'),
@@ -27,4 +30,8 @@ urlpatterns = [
     path('comment/delete/<int:pk>',CommentDeleteView.as_view(),name='comment_delete'),
    
     path('catagories/<int:pk>',CatagoryDetailView.as_view(),name='catagory_detail'),
-]
+
+
+    path('favourites/',FavouriteListView.as_view(),name='favourite_list'),
+    path('togglefav/<int:pk>',togglebookmark,name='toggle_favourite'),
+   ]

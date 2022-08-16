@@ -32,8 +32,9 @@ class Post(models.Model):
     return self.tags.all()
   def get_comments(self):
     return self.comments.filter(parent=None)
-  def get_absolute_url(self):
+    def get_absolute_url(self):
       return reverse("post_detail", kwargs={"pk": self.pk}) or  ''
+
 
 
 '''class Tag(models.Model):
@@ -90,3 +91,17 @@ class Comment(models.Model):
     def get_absolute_url(self):
         return reverse("comment_detail", kwargs={"pk": self.pk})
 
+class Favourite(models.Model):
+    owner=models.OneToOneField(get_user_model(),on_delete=models.CASCADE,related_name='favourites',editable=False)
+    posts=models.ManyToManyField(Post)
+    
+
+    class Meta:
+        verbose_name = "Favourite"
+        verbose_name_plural = "Favourites"
+
+    def __str__(self):
+        return 'favourites@'+str(self.owner)
+
+    def get_absolute_url(self):
+        return reverse("Favourite_detail", kwargs={"pk": self.pk})

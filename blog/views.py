@@ -1,9 +1,12 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 from django.views.generic import ListView,CreateView,UpdateView,DeleteView,DetailView
-from .models import Catagory, Post,Author,Comment
+from .models import Catagory, Post,Author,Comment,Favourite
 from django.contrib.auth.mixins import UserPassesTestMixin,LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 class PostListView(ListView):
@@ -108,6 +111,35 @@ class CommentDeleteView(DeleteView):
 class CatagoryDetailView(DetailView):
     model=Catagory
     template_name='post/catagory_detail.html'
+
+
+@login_required
+def togglebookmark(request,pk):
+    bm=request.user.favourites
+    try:
+        q=bm.posts.filter(id=pk)
+        if q.exists():
+            bm.posts.remove(pk)
+            return JsonResponse({'bm':'0'})
+        else:
+            bm.posts.add(pk)
+            return JsonResponse({'bm':'1'})
+        
+    except:
+        pass
+    return JsonResponse({'bm':'0'})
+
+
+class FavouriteListView(LoginRequiredMixin,ListView):
+    model = Favourite
+    template_name = "post/favourites.html"
+    
+    def get_queryset(self):
+        return self.request.user.favourites.posts.all()
+
+
+    
+
        
 
 

@@ -1,0 +1,39 @@
+{% load check_starred %}
+<button class="fav" id={{post.id}}>{{post.id|star:user}}</button>
+
+
+
+<script type='text/javascript'>
+$('.fav').click(
+  e=>{
+  if (e.target.id=={{post.id}}){
+    e.target.disabled=true
+$.ajax({
+  url:'{% url 'toggle_favourite' post.id %}',
+  
+  success:d=>{
+
+    if(d.bm==1){
+      e.target.innerText='⭐'
+    }
+    else
+    {e.target.innerText='✰'
+    
+    if(document.location.pathname.match({% url 'favourite_list' %}))
+    {
+
+      console.log(e.target.parentNode.parentNode.hidden=true)
+    }
+  }
+  e.target.disabled=false
+  },
+  
+
+}
+  
+
+)
+}
+    }
+)
+</script>

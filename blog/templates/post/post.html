@@ -1,14 +1,25 @@
 {% load humanize %}
 <article>
   {% if listview %}
-  <a href={% url 'post_detail' post.id %}>
-    <h4>{{post.title}}</h4>
-  </a>
+    <h4>
+      <a href={% url 'post_detail' post.id %}>
+      {{post.title}} 
+      </a>
+      {% if user.is_authenticated %}
+      {% include 'post/bookmark.html' %}
+      {% endif %}
+      
+     
+    </h4>
   
   {% else %}
-  <h2>{{post.title}}
-  
-  {% if user.id is post.author.user.id %}
+  <h2>
+    <strong>{{post.title}}</strong>
+    {% if user.is_authenticated %}
+      {% include 'post/bookmark.html' %}
+      {% endif %}
+      
+    {% if user.id is post.author.user.id %}
   <small><a href={% url 'post_update' post.id %}>Edit</a></small>
   {% endif %}
   </h2>

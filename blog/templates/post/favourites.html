@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Favourite posts</h1>
+
+{% for p in  object_list %}
+{% include 'post/post.html'  with post=p listview=True %}
+{% endfor %}
+
+{% endblock content %}
